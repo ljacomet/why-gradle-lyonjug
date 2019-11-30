@@ -1,0 +1,66 @@
+[background-color="#01303a"]
+== Developer productivity
+
+=== Influences on +++<br />+++ developer productivity
+
+[%step]
+* IDE
+* Languages and frameworks
+* Good hardware
+* Training
+* ...
+* Food in cafeteria
+
+=== Developer productivity
+
+> *Fast* feedback cycles
+
+=== Fast feedback cycles
+
+Through maximum build performance:
+[%step]
+* Measure
+* Optimize
+* Reliability
+
+=== Maximum build performance
+
+> *Maximum build performance* is the maximum achievable performance of a build system *for your code base.*
+
+=== Measure
+
+Needs data
+[%step]
+* CI server captures times ✅
+* What about developer builds  ❌
+
+=== Optimization
+
+[%step]
+* Requires actionable feedback!
+
+=== Reliability
+
+This makes the quality of a tool
+
+=== Personal experience
+
+[%step]
+* Large Java multi project with 20+ projects
+* Using Maven as the build tool
+[%step]
+** Minutes to get a product archive with `mvn clean package -DskipTests`
+** Full build on CI takes 2h30+
+* Migrated to Gradle
+[%step]
+** Seconds to get a product archive with `./gradlew assemble`
+** Full build on CI takes 40 minutes, thanks to parallelization
+
+=== How
+
+[%step]
+* Compile avoidance
+* Incremental compilation
+* Incremental builds
+* Parallelization
+* Build cache

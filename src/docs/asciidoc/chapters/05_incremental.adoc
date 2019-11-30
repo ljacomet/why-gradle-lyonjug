@@ -1,0 +1,69 @@
+[background-color="#01303a"]
+== Incremental builds
+
+=== Why does it matter?
+
+* Gradle is meant for incremental builds
+* `clean` is a waste of time
+
+=== The _incrementality_ test
+
+[%step]
+* Run a build
+* Run again with no change
+* If a task was re-executed, time is wasted
+[%step]
+** Investigate!
+
+[background-color="#01303a"]
+=== Properly writing tasks
+
+=== Example: building a shaded jar
+
+[source,groovy]
+----
+task shadedJar(type: ShadedJar) {
+   jarFile = file("$buildDir/libs/shaded.jar")
+   classpath = configurations.runtime
+   mapping = ['org.apache': 'shaded.org.apache']
+}
+----
+
+* What are the task inputs?
+* What are the task outputs?
+* What if one of them changes?
+
+=== Declaring inputs
+
+[source,java]
+----
+public class ShadedJar extends DefaultTask {
+   ...
+   @InputFiles
+   FileCollection getClasspath() { ... }
+
+   @Input
+   Map<String, String> getMapping() { ... }
+}
+----
+
+=== Declaring outputs
+
+[source,java]
+----
+public class ShadedJar extends DefaultTask {
+   ...
+
+   @OutputFile
+   File getJarFile() { ... }
+}
+----
+
+=== Know why your task is out-of-date
+
+image::task-out-of-date.png[height=415]
+
+=== Incremental task inputs
+
+* Know precisely _which_ files have changed
+* Task action can perform the minimal amount of work

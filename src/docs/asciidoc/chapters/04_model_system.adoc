@@ -1,0 +1,100 @@
+[background-color="#01303a"]
+== Modelling the system
+
+=== Compile classpath
+
+What does a *compiler* care about?
+
+[%step]
+* Input: jars, or class directories
+* Jar: class files
+* Class file: both API and implementation
+
+=== Compile classpath
+
+What we provide to the compiler
+
+```
+public class Foo {
+    private int x = 123;
+
+    public int getX() { return x; }
+    public int getSquaredX() { return x * x; }
+}
+```
+
+=== Compile classpath
+
+What the compiler cares about:
+
+```
+public class Foo {
+    public int getX()
+    public int getSquaredX()
+}
+```
+
+=== Compile classpath
+
+But it could also be
+
+```
+public class Foo {
+    public int getSquaredX()
+    public int getX()
+}
+```
+
+**only public signatures matter**
+
+=== Runtime classpath
+
+What does the runtime care about?
+
+=== Runtime classpath
+
+What does the runtime care about:
+
+```
+public class Foo {
+    private int x = 123;
+
+    public int getX() { return x; }
+    public int getSquaredX() { return x * x; }
+}
+```
+
+At runtime, *everything* matters, from classes to resources.
+
+=== Compile avoidance
+
+[%step]
+* _compile_ and _runtime_ classpath have different _semantics_
+* Gradle models the difference
+* Ignores irrelevant (non ABI) changes to compile classpath
+
+=== Icing on the cake
+
+[%step]
+* Upgrade a dependency from `1.0.1` to `1.0.2`
+* If ABI hasn't changed, Gradle will _not_ recompile
+* Even if the name of the jar is different (`mydep-1.0.1.jar` vs `mydep-1.0.2.jar`)
+* Because only _contents_ matter
+
+=== More modelling with dependencies configurations
+
+[%step]
+* `implementation` indicates an internal dependency
+* consumers _will not_ see it on their `compileClasspath`
+* consumers _will_ see it on their `runtimeClasspath`
+* `api` indicates that the dependency needs to be on consumers' `compileClasspath`
+
+=== Configuration mapping
+
+image::../images/java-library-ignore-deprecated-main.png[width=1000,height=0%]
+
+[%step]
+* `compile` and `runtime` were _only_ about _compilation_
+* `api`, `implementation` and friends are about _compilation_ and _publication / consumption_
+
+

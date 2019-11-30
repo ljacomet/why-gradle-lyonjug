@@ -1,0 +1,22 @@
+[background-color="#01303a"]
+== What's new in Gradle 6?
+
+=== Java 13 support
+
+Why only now?
+
+[%step]
+* Gradle is built on top of many libraries
+* Takes time for all the building blocks to support Java 13
+* Doing the upgrade without breaking anything can be challenging
+
+=== JVM improvements
+
+[%step]
+* Groovy compilation avoidance (opt-in, feature preview)
+* Faster incremental compilation for Java and Groovy
+* Support the new Zinc compile for Scala
+
+=== And more ...
+
+400+ issues / PRs included in this release
